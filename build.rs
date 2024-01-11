@@ -388,7 +388,7 @@ fn main() -> Result<()> {
 		)
 	}
 
-	setup_rerun()?;
+	// setup_rerun()?;
 
 	let binding_generator = BindingGenerator::new(build_script_path);
 	binding_generator.generate_wrapper(opencv_header_dir, &opencv)?;

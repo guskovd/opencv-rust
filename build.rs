@@ -275,19 +275,19 @@ fn build_compiler(opencv: &Library) -> cc::Build {
 }
 
 fn setup_rerun() -> Result<()> {
-	// for &v in AFFECTING_ENV_VARS.iter() {
-	// 	println!("cargo:rerun-if-env-changed={v}");
-	// }
+	for &v in AFFECTING_ENV_VARS.iter() {
+		println!("cargo:rerun-if-env-changed={v}");
+	}
 
 	let include_exts = &[OsStr::new("cpp"), OsStr::new("hpp")];
 	let files_with_include_exts =
 		files_with_predicate(&SRC_CPP_DIR, |p| p.extension().map_or(false, |e| include_exts.contains(&e)))?;
 	for path in files_with_include_exts {
 		if let Some(path) = path.to_str() {
-			// println!("cargo:rerun-if-changed={path}");
+			println!("cargo:rerun-if-changed={path}");
 		}
 	}
-	// println!("cargo:rerun-if-changed=Cargo.toml");
+	println!("cargo:rerun-if-changed=Cargo.toml");
 	Ok(())
 }
 
@@ -388,7 +388,7 @@ fn main() -> Result<()> {
 		)
 	}
 
-	setup_rerun()?;
+	// setup_rerun()?;
 
 	let binding_generator = BindingGenerator::new(build_script_path);
 	binding_generator.generate_wrapper(opencv_header_dir, &opencv)?;
